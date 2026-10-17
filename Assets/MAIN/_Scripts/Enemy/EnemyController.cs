@@ -24,11 +24,11 @@ public class EnemyController : MonoBehaviour
     }
     private void OnEnable()
     {
-        health.OnDeath += Despawn;
+        health.OnDeath += HandleDeath;
     }
     private void OnDisable()
     {
-        health.OnDeath -= Despawn;
+        health.OnDeath -= HandleDeath;
     }
     private void FixedUpdate()
     {
@@ -55,6 +55,7 @@ public class EnemyController : MonoBehaviour
     #endregion
     public void Initialize(EnemyData data, Transform target)
     {
+        rb.linearVelocity = Vector2.zero;
         playerTransform = target;
         currentData = data;
         health.Initialize(currentData.MaxHealth);
@@ -62,9 +63,8 @@ public class EnemyController : MonoBehaviour
         contactDamage.Initialize(currentData.ContactDamage);
     }
 
-    private void Despawn()
+    private void HandleDeath()
     {
         OnEnemyDied?.Invoke(currentData);
-        Destroy(gameObject);
     }  
 }

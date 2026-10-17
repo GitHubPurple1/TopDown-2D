@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.Pool;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("References")]
@@ -7,6 +7,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private EnemyData fastData;
     [SerializeField] private EnemyData tankData;
+    [SerializeField] private Transform enemyContainer;
 
     [Header("Difficulty")]
     [SerializeField] private float startInterval = 2f;
@@ -20,9 +21,9 @@ public class EnemySpawner : MonoBehaviour
     private Camera cam;
     private float nextSpawnTime;
     private float startTime;
-
+    private ObjectPool<EnemyController> pool;
     public event System.Action<EnemyData> OnEnemyKilled;
-
+    #region Unity
     private void Awake() 
     {
         cam = Camera.main;
@@ -31,6 +32,23 @@ public class EnemySpawner : MonoBehaviour
             Debug.LogError("Camera Reference Not Found");
             this.enabled = false;
         }
+        
+        pool = new ObjectPool<EnemyController>(
+         createFunc: () =>
+         {
+             EnemyController e = Instantiate(enemyPrefab,enemyContainer);
+             e.OnEnemyDied += data => HandleEnemyDied(e, data);
+             return e;
+         }, 
+         actionOnGet: e => e.gameObject.SetActive(true),
+         actionOnRelease: e => e.gameObject.SetActive(false),
+         actionOnDestroy: e =>
+         {
+             if (e != null) Destroy(e.gameObject);
+         },
+         collectionCheck: true,
+         defaultCapacity: 20,
+         maxSize: 100);            
     }
 
     private void OnEnable() 
@@ -40,6 +58,10 @@ public class EnemySpawner : MonoBehaviour
        nextSpawnTime = Time.time + startInterval;
     }
 
+    private void OnDestroy()
+    {
+        pool.Dispose();
+    }
     private void Update()
     {
         if (player == null) return;
@@ -51,7 +73,7 @@ public class EnemySpawner : MonoBehaviour
         Spawn(t);
         nextSpawnTime = Time.time + interval;
     }
-
+    #endregion
     private void Spawn(float difficulty)
     {
         EnemyData enemyData;
@@ -67,11 +89,10 @@ public class EnemySpawner : MonoBehaviour
         }
 
         Vector2 spawnPos = GetSpawnPosition();
-        EnemyController enemy = Instantiate(enemyPrefab,spawnPos,Quaternion.identity);
+        EnemyController enemy = pool.Get();
+        enemy.transform.position = spawnPos;
 
         enemy.Initialize(enemyData,player);
-
-        enemy.OnEnemyDied += HandleEnemyDied;
     }
 
     private Vector2 GetSpawnPosition()
@@ -89,8 +110,9 @@ public class EnemySpawner : MonoBehaviour
         return randomPos;
     }
 
-    private void HandleEnemyDied(EnemyData data)
+    private void HandleEnemyDied(EnemyController controller,EnemyData data)
     {
         OnEnemyKilled?.Invoke(data);
+        pool.Release(controller);
     }
 }

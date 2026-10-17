@@ -5,6 +5,7 @@ using UnityEngine;
 public class InputReader : MonoBehaviour
 {
     private IA_Player playerInput;
+    #region Unity
     private void Awake()
     {
       playerInput = new IA_Player();
@@ -21,7 +22,7 @@ public class InputReader : MonoBehaviour
     {
       playerInput.Dispose();
     }
-    
+    #endregion
     public Vector2 GetMoveInput()
     {
         return playerInput.Player.Movement.ReadValue<Vector2>();

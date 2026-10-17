@@ -9,6 +9,7 @@ public class PlayerShooter : MonoBehaviour
     [SerializeField] private float fireCooldown;
     [SerializeField] private float projectileSpeed;
     [SerializeField] private float damage;
+    [SerializeField] private Transform projectileContainer;
 
     private ObjectPool<Projectile> pool;
     private InputReader reader;
@@ -24,13 +25,16 @@ public class PlayerShooter : MonoBehaviour
         pool = new ObjectPool<Projectile>(
         createFunc: () =>
         {
-            Projectile p = Instantiate(projectilePrefab);
+            Projectile p = Instantiate(projectilePrefab,projectileContainer);
             p.OnDespawn += pool.Release;
             return p;
         },      
         actionOnGet: p => p.gameObject.SetActive(true),       
-        actionOnRelease: p => p.gameObject.SetActive(false),  
-        actionOnDestroy: p => Destroy(p.gameObject),
+        actionOnRelease: p => p.gameObject.SetActive(false),
+        actionOnDestroy: p =>
+        {
+            if (p != null) Destroy(p.gameObject);
+        },
         collectionCheck: true,
         defaultCapacity: 20,
         maxSize: 100);

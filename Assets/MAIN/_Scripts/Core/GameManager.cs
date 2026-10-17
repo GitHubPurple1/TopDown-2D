@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public event Action OnGameOver;
 
     private float startTime;
-
+    #region Unity
     private void Awake()
     {
         State = GameState.Playing;
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         playerHealth.OnDeath -= HandlePlayerDeath;
         spawner.OnEnemyKilled -= HandleEnemyKilled;
     }
-
+    #endregion
     private void HandleEnemyKilled(EnemyData data)
     {
         if(State!= GameState.Playing) return;
