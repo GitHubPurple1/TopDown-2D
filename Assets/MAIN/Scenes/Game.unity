@@ -475,7 +475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d51fb3239e2c5524cbab3c6e90613b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HUDController
-  playerHealth: {fileID: 1275339010}
+  playerHealth: {fileID: 1275339018}
   gameManager: {fileID: 1951963013}
   hpSlider: {fileID: 669936161}
   hpText: {fileID: 1931938607}
@@ -1222,17 +1222,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1275339010 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7538242183030197061, guid: e2688e9fdc867fc429597b8811c07e11, type: 3}
-  m_PrefabInstance: {fileID: 750824877729782496}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46d392020e1fb234c8742157209269b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
 --- !u!114 &1275339013 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7482855246717568596, guid: e2688e9fdc867fc429597b8811c07e11, type: 3}
@@ -1244,6 +1233,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14875d676f5558b44b24f73d899a1f3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputReader
+--- !u!114 &1275339018 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9027668101221268645, guid: e2688e9fdc867fc429597b8811c07e11, type: 3}
+  m_PrefabInstance: {fileID: 750824877729782496}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46d392020e1fb234c8742157209269b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
 --- !u!1 &1538962861
 GameObject:
   m_ObjectHideFlags: 0
@@ -1856,7 +1856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54ed6220fb9331b4180208bbd74f84d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  playerHealth: {fileID: 1275339010}
+  playerHealth: {fileID: 1275339018}
   playerInput: {fileID: 1275339013}
   spawner: {fileID: 607869263}
 --- !u!4 &1951963014
@@ -2324,22 +2324,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4886710000137705550, guid: e2688e9fdc867fc429597b8811c07e11, type: 3}
-      propertyPath: damage
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4886710000137705550, guid: e2688e9fdc867fc429597b8811c07e11, type: 3}
-      propertyPath: fireCooldown
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4886710000137705550, guid: e2688e9fdc867fc429597b8811c07e11, type: 3}
-      propertyPath: projectileSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 7538242183030197061, guid: e2688e9fdc867fc429597b8811c07e11, type: 3}
-      propertyPath: maxHealth
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 9000529570260980626, guid: e2688e9fdc867fc429597b8811c07e11, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2379,6 +2363,10 @@ PrefabInstance:
     - target: {fileID: 9000529570260980626, guid: e2688e9fdc867fc429597b8811c07e11, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9027668101221268645, guid: e2688e9fdc867fc429597b8811c07e11, type: 3}
+      propertyPath: maxHealth
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

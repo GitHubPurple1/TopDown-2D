@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 7482855246717568596}
   - component: {fileID: 6395639819387677326}
   - component: {fileID: 4886710000137705550}
+  - component: {fileID: 9027668101221268645}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -242,9 +243,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooter
   projectilePrefab: {fileID: 2314154519757420634, guid: fb0f8b88a5de0384ca3f7eadca1c3d0e, type: 3}
   firePoint: {fileID: 6134042181806011418}
-  fireCooldown: 0.25
-  projectileSpeed: 12
-  damage: 10
+  fireCooldown: 0.1
+  projectileSpeed: 15
+  damage: 20
+--- !u!114 &9027668101221268645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4704143668501222888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46d392020e1fb234c8742157209269b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
+  maxHealth: 0
 --- !u!1 &4772141541298989157
 GameObject:
   m_ObjectHideFlags: 0

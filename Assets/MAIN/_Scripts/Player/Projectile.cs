@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -7,7 +8,9 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float lifetime;
     private float damageValue;
     private float timeToDespawn;
-    private bool hasHit;
+    private bool isFinished;
+    public event Action<Projectile> OnDespawn;
+
     #region Unity
     private void Awake()
     {
@@ -15,7 +18,8 @@ public class Projectile : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        hasHit = true;
+        if (isFinished) return;
+
         if (collision.gameObject.TryGetComponent<IDamageable>(out var damageable))
         {
             damageable.TakeDamage(damageValue);
@@ -34,11 +38,14 @@ public class Projectile : MonoBehaviour
         damageValue = damage;
         rb.linearVelocity = direction.normalized * speed;
         timeToDespawn = Time.time + lifetime;
-        hasHit = false;
+        isFinished = false;
     }
 
     private void Despawn()
     {
-        Destroy(gameObject);
+        if(isFinished) return;
+        isFinished = true;
+        rb.linearVelocity = Vector2.zero;
+        OnDespawn?.Invoke(this);
     }
 }
